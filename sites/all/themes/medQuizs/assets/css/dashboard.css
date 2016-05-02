@@ -1,0 +1,183 @@
+/*
+ * Base structure
+ */
+
+/* Move down content because we have a fixed navbar that is 50px tall */
+body {
+  padding-top: 50px;
+}
+
+
+/*
+ * Global add-ons
+ */
+
+.sub-header {
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+/*
+ * Top navigation
+ * Hide default border to remove 1px line.
+ */
+.navbar .navbar-nav {
+  display: inline-block;
+  float: none;
+  vertical-align: top;
+}
+
+.navbar .navbar-collapse {
+  text-align: center;
+}
+/*
+ * Sidebar
+ */
+
+/* Hide for mobile, show later */
+.sidebar {
+  display: none;
+}
+@media (min-width: 768px) {
+  .sidebar {
+    position: fixed;
+    top: 51px;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    display: block;
+    padding: 20px;
+    overflow-x: hidden;
+    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+    background-color: #f5f5f5;
+    border-right: 1px solid #eee;
+  }
+}
+
+/* Sidebar navigation */
+.nav-sidebar {
+  margin-right: -21px; /* 20px padding + 1px border */
+  margin-bottom: 20px;
+  margin-left: -20px;
+}
+.nav-sidebar > li > a {
+  padding-right: 20px;
+  padding-left: 20px;
+}
+.nav-sidebar > .active > a,
+.nav-sidebar > .active > a:hover,
+.nav-sidebar > .active > a:focus {
+  color: #fff;
+  background-color: #428bca;
+}
+
+
+
+/**/
+.medio {
+  border-right: 1px dashed #333;
+}
+
+/*
+ * Main content
+ */
+
+.main {
+  padding: 20px;
+}
+@media (min-width: 768px) {
+  .main {
+    padding-right: 40px;
+    padding-left: 40px;
+  }
+}
+.main .page-header {
+  margin-top: 0;
+}
+
+
+/*
+ * Placeholder dashboard ideas
+ */
+
+.placeholders {
+  margin-bottom: 30px;
+  text-align: center;
+}
+.placeholders h4 {
+  margin-bottom: 0;
+}
+.placeholder {
+  margin-bottom: 20px;
+}
+.placeholder img {
+  display: inline-block;
+  border-radius: 50%;
+}
+
+.pregunta{
+    margin-top: 10px;
+    margin-right: 10px;
+}
+.hashtag{
+  width: 40%;
+  margin-top: 10px;
+  margin-right: 10px;
+}
+
+
+
+////////////////modal previsualizar tweet
+
+.modalDialog {position: fixed;font-family: Arial, Helvetica, sans-serif;top: 0;right: 0;bottom: 0;left: 0;/*background: rgba(0,0,0,0.8);*/z-index: 99999;filter: alpha(opacity=0);opacity:0;-webkit-transition: opacity 400ms ease-in;-moz-transition: opacity 400ms ease-in;transition: opacity 400ms ease-in;pointer-events: none;-webkit-touch-callout: none;-webkit-user-select: none;-khtml-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;}
+.modalDialog.biblioteca {background: none!important;}
+.modalDialog > div {-webkit-transform: scale(1.0);-moz-transform: scale(1.0);-ms-transform: scale(1.0);-o-transform: scale(1.0);transform: scale(1.0);transition: all 200ms linear;transition: all 200ms linear;}
+.modalDialog.zoomIn > div {-webkit-transform: scale(1.5);-moz-transform: scale(1.5);-ms-transform: scale(1.5);-o-transform: scale(1.5);transform: scale(1.5);transition: all 200ms linear;transition: all 200ms linear;}
+.modalDialog.zoomOut > div {-webkit-transform: scale(0.75);-moz-transform: scale(0.75);-ms-transform: scale(0.75);-o-transform: scale(0.75);transform: scale(0.75);transition: all 200ms linear;}
+.modalDialog.active {filter: alpha(opacity=100);opacity:1;pointer-events: auto;}
+.herramientasZoom {position: absolute; width: auto;height: auto;left: 10px;bottom: 70px;}
+.zoom {opacity: 0.15;text-decoration: none!important;}
+.zoom:hover {opacity: 1;}
+.zoom .icon_zoomIn:before {font-size: 25px;}
+.zoom .icon_zoomOut:before {font-size: 25px;}
+iframe#iframeModule, iframe#iframePDF, iframe#iframePaginaCurso, iframe#iframePaginaCursoMoocs {border: none;box-shadow: 0 0 20px black;}
+iframe#iframePago {
+  border: none;
+  -webkit-transition: height 0.8s;
+  -moz-transition: height 0.8s;
+  transition: height 0.8s;
+}
+iframe#iframePDF {border-radius: 10px;}
+iframe#iframeVerMasCursoMoocs {border: none;}
+.close {position: absolute;right: 5px;top: 33px;opacity: 1;}
+.close::before {content: url(/sites/all/libraries/pdf.js/web/images/cerrar.png);}
+.closePaginaCurso, .closePaginaCursoMoocs, .closeVerMasCursoMoocs,.closePago {background: #606061;color: #FFFFFF;line-height: 25px;position: absolute;right: -12px;text-align: center;top: -10px;width: 24px;text-decoration: none;font-weight: bold;-webkit-border-radius: 12px;-moz-border-radius: 12px;border-radius: 12px;-moz-box-shadow: 1px 1px 3px #000;-webkit-box-shadow: 1px 1px 3px #000;box-shadow: 1px 1px 3px #000;}
+.close:hover {opacity: 1;}
+img#spinner {width: auto;position: relative;top: 50%;display: block;margin: auto;}
+.loader {display: none;width: 100%;height: 100%;position: fixed;font-family: Arial, Helvetica, sans-serif;top: 0;right: 0;bottom: 0;left: 0;background: rgba(0,0,0,0.8);z-index: 99999;}
+iframe#iframeModule {width: 816px;height: 616px;}
+
+
+
+.img{
+  position: absolute;
+  margin:10px auto;
+  width:50%;
+  height:30%;
+  float: left;
+  background-size: 100% 100%;
+  background-repeat:no-repeat;
+  background:url(../img/gorro.png);
+  }
+.img img{
+  width: 100%;
+}
+
+.results{
+    position: relative;
+    display: inline;
+    width: 20%;
+    height: 100%;
+    float: right;
+    overflow: hidden;
+}

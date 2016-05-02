@@ -1,0 +1,38 @@
+<?php
+
+/**
+ * Implementa hook_block_info().
+ */
+function sidebar_block_info() {
+  $blocks["sidebar"] = array(
+    "info" => "sidebar Mas respondidos",
+  );
+  return $blocks;
+}
+
+/**
+ * Implementa hook_block_view().
+ */
+function sidebar_block_view($delta = "") {
+  $block=array();
+  switch ($delta) {
+    case "sidebar":
+      $block["content"] = side();
+      return $block;   
+  }
+}
+
+function side()
+{
+  $html='<div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li id="inicio" class="active"><a href="./">Inicio </a></li>
+            <li id="myQuizs"><a href="doneQuizs">Mis Respuestas</a></li>
+            <li id="pendingQuizs"><a href="pendingQuizs">Quizs Pendientes</a></li>
+            <li id="newQuiz"><a href="newQuiz">Propón Preguntas</a></li>
+            <li id="quizInbox"><a href="quizInbox">Buzón de Preguntas</a></li>
+          </ul>
+        </div>';
+
+  return $html;
+}

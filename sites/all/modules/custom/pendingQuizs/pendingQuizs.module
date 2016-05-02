@@ -1,0 +1,74 @@
+<?php
+
+/**
+ * Implementa hook_block_info().
+ */
+function pendingQuizs_block_info() {
+  $blocks["pendingQuizs"] = array(
+    "info" => "Quizs No respondidos por el usuario",
+  );
+  return $blocks;
+}
+
+/**
+ * Implementa hook_block_view().
+ */
+function pendingQuizs_block_view($delta = "") {
+  $block=array();
+  switch ($delta) {
+    case "pendingQuizs":
+      $block["content"] = pending();
+      return $block;   
+  }
+}
+
+function pending()
+{
+  global $user;
+  $user_data=$user->data['hybridauth'];
+  $html='<div class="col-md-6 col-md-offset-2">
+          <div style="clear: both; margin-top: 10px;"></div>';
+          print_r($user_data['identifier'],true);
+          $sql="SELECT * FROM quiz WHERE publicado=1 and id not in (select id_quiz from tweet where user_id ='".$user_data['identifier']."')";
+          error_log($sql);
+          $result=db_query($sql);
+          if(!$result)
+          {
+            $html.="NO TIENES QUIZS PENDIENTES";
+          }
+          foreach ($result as $key) {
+
+            $sqlHashtags="SELECT * FROM tweet WHERE id_quiz=".$key->id;
+            $resultHashtags=db_query($sqlHashtags);
+            $datos=array();
+            foreach ($resultHashtags as $row) {
+              $sqlDatos="SELECT answer,count(*) cuenta FROM tweet WHERE id_quiz =".$key->id." group by answer";
+              $resultDatos=db_query($sqlDatos);
+              foreach ($resultDatos as $dato) {
+                $respuesta=$dato->cuenta;
+                $datos[$dato->answer]=$respuesta;
+              }
+            }
+            if(!isset($datos[A])){$datos[A]=0;}
+            if(!isset($datos[B])){$datos[B]=0;}
+            if(!isset($datos[C])){$datos[C]=0;}
+            if(!isset($datos[D])){$datos[D]=0;}
+            $html.='<div class="panel panel-primary"> 
+        <div class="panel-heading">'.$key->name.'</div>
+            <div class="panel-body">
+              <img class="img" src="sites/all/themes/medQuizs/assets/images/'.$key->name.'.jpg">
+              <div style="clear: both; margin-top: 20px;"></div>
+              <canvas id="'.$key->name.'" class="results"> 
+                <script>rellenaGraf('.$datos[A].',"#Q1A",'.$datos[B].',"#Q1B",'.$datos[C].',"#Q1C",'.$datos[D].',"#Q1D","'.$key->name.'");</script> 
+              </canvas>
+            </div>
+          </div>
+                   
+          <div style="clear: both; margin-top: 10px;"></div>';
+          }
+          
+  $html.='</div>           
+        </div>';
+
+  return $html;
+}

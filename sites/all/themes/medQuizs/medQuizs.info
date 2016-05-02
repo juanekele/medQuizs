@@ -1,0 +1,36 @@
+
+name = MedQuizs
+description = Diseño  a dos columnas.
+package = Core
+version = VERSION
+core = 7.x
+
+;CSS
+stylesheets[all][] = assets/css/bootstrap.min.css
+stylesheets[all][] = assets/css/dashboard.css
+stylesheets[all][] = assets/css/layout.css
+;stylesheets[all][] = assets/css/style.css
+stylesheets[all][] = assets/css/colors.css
+stylesheets[print][] = assets/css/print.css
+
+;JS
+scripts[] = assets/js/jquery-1.12.3.js
+scripts[] = assets/js/mediQuizs.js
+scripts[] = assets/js/Chart.js
+scripts[] = assets/js/bootstrap.min.js
+
+;REGIONES
+regions[page_top] = Page Top
+regions[page_bottom] = Page Bottom
+regions[header] = Header
+regions[carrusel] = Carrusel
+regions[breadcrumb] = Breadcrumb
+regions[sidebar]= Sidebar
+regions[colPpal] = Columna Principal
+regions[colDcha] = Columna Derecha
+regions[content] = Content
+regions[main_menu] = Main menu
+regions[footer]	= Footer
+regions[help] = Help
+
+settings[shortcut_module_link] = 0

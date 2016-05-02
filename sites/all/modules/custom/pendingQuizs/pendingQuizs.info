@@ -1,0 +1,5 @@
+name = Quizs Pendientes
+description = "Quizs no Respondidos por usuario"
+core = 7.x
+package = Custom modules
+version = "1.0"

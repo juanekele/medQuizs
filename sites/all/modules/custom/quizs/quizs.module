@@ -1,0 +1,69 @@
+<?php
+
+/**
+ * Implementa hook_block_info().
+ */
+function quizs_block_info() {
+  $blocks["quizs"] = array(
+    "info" => "Quizs Mas respondidos",
+  );
+  return $blocks;
+}
+
+/**
+ * Implementa hook_block_view().
+ */
+function quizs_block_view($delta = "") {
+  $block=array();
+  switch ($delta) {
+    case "quizs":
+      $block["content"] = progreso();
+      return $block;   
+  }
+}
+
+function progreso()
+{
+
+
+  $html='<div class="col-md-6 col-md-offset-2">
+          <div style="clear: both; margin-top: 10px;"></div>';
+
+          $sql="SELECT * FROM quiz WHERE publicado=1";
+          $result=db_query($sql);
+          foreach ($result as $key) {
+
+            $sqlHashtags="SELECT * FROM tweet WHERE id_quiz=".$key->id;
+            $resultHashtags=db_query($sqlHashtags);
+            $datos=array();
+            foreach ($resultHashtags as $row) {
+              $sqlDatos="SELECT answer,count(*) cuenta FROM tweet WHERE id_quiz =".$key->id." group by answer";
+              $resultDatos=db_query($sqlDatos);
+              foreach ($resultDatos as $dato) {
+                $respuesta=$dato->cuenta;
+                $datos[$dato->answer]=$respuesta;
+              }
+            }
+            if(!isset($datos[A])){$datos[A]=0;}
+            if(!isset($datos[B])){$datos[B]=0;}
+            if(!isset($datos[C])){$datos[C]=0;}
+            if(!isset($datos[D])){$datos[D]=0;}
+            $html.='<div class="panel panel-primary"> 
+        <div class="panel-heading">'.$key->name.'</div>
+            <div class="panel-body">
+              <img class="img" src="sites/all/themes/medQuizs/assets/images/'.$key->name.'.jpg">
+              <div style="clear: both; margin-top: 20px;"></div>
+              <canvas id="'.$key->name.'" class="results"> 
+                <script>rellenaGraf('.$datos[A].',"#Q1A",'.$datos[B].',"#Q1B",'.$datos[C].',"#Q1C",'.$datos[D].',"#Q1D","'.$key->name.'");</script> 
+              </canvas>
+            </div>
+          </div>
+                   
+          <div style="clear: both; margin-top: 10px;"></div>';
+          }
+          
+  $html.='</div>           
+        </div>';
+
+  return $html;
+}
