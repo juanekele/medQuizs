@@ -95,34 +95,13 @@
                    placeholder="Introduce La Pregunta"></textarea>
           </div>
           <div class="form-group">
-            <table>
-              <tr>
-                <th><label for="ejemplo_email_1">Respuestas</label></th>
-                <div style="clear: both; margin-top: 25px;"></div>
-                <th><label for="ejemplo_email_1">hashtag</label></th>
-                <th><label for="ejemplo_email_1">Correcta</label></th>
-              </tr>
-              <tr>
-                <td><input type="email" class="form-control pregunta" id="correct_answer" placeholder="Introduce la respuesta 1"></td>
-                <td><input type="email" class="form-control hashtag" id="correct_answer" placeholder="Hashtag1"></td>
-                <td><input type="radio" class="form-control" id="correct_answer" placeholder="Hashtag1"></td>
-              </tr>
-              <tr>
-                <td><input type="email" class="form-control pregunta" id="correct_answer" placeholder="Introduce la respuesta 2"></td>
-                <td><input type="email" class="form-control hashtag" id="correct_answer" placeholder="Hashtag1"></td>
-                <td><input type="radio" class="form-control" id="correct_answer" placeholder="Hashtag1"></td>
-              </tr>
-              <tr>
-                <td><input type="email" class="form-control pregunta" id="correct_answer" placeholder="Introduce la respuesta 3"></td>
-                <td><input type="email" class="form-control hashtag" id="correct_answer" placeholder="Hashtag1"></td>
-                <td><input type="radio" class="form-control" id="correct_answer" placeholder="Hashtag1"></td>
-              </tr>
-              <tr>
-                <td><input type="email" class="form-control pregunta" id="correct_answer" placeholder="Introduce la respuesta 4"></td>
-                <td><input type="email" class="form-control hashtag" id="correct_answer" placeholder="Hashtag1"></td>
-                <td><input type="radio" class="form-control" id="correct_answer" placeholder="Hashtag1"></td>
-              </tr>
-            </table>
+            <div style="display:inline-block">
+            <input type="text" class="form-control pregunta" id="correct_answer" placeholder="Introduce la respuesta 1">
+            <label class="radio-inline"><input type="radio" name="optradio">Option 1</label>
+            </div>
+            <input type="text" class="form-control pregunta" id="correct_answer" placeholder="Introduce la respuesta 1">
+            <input type="text" class="form-control pregunta" id="correct_answer" placeholder="Introduce la respuesta 1">
+            <input type="text" class="form-control pregunta" id="correct_answer" placeholder="Introduce la respuesta 1">
           </div>
           <button type="submit" class="btn btn-default">Enviar</button>
         </form>

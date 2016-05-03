@@ -9,7 +9,7 @@ core = 7.x
 stylesheets[all][] = assets/css/bootstrap.min.css
 stylesheets[all][] = assets/css/dashboard.css
 stylesheets[all][] = assets/css/layout.css
-;stylesheets[all][] = assets/css/style.css
+stylesheets[all][] = assets/css/style.css
 stylesheets[all][] = assets/css/colors.css
 stylesheets[print][] = assets/css/print.css
 

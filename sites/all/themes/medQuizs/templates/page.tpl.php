@@ -109,24 +109,9 @@
     </div></main> <!-- /#main, /#main-wrapper -->
 
     <footer id="mainFooter" class="box_secundario" data-role="footer">
-        <div class="wrapperFluid container-fluid">
-          <div class="wrapperFix container">
-            <div class="colCompleta row">
-              <section id="footer_extras">
-                <p class="col-xs-12 col-sm-5">ICEA | López de Hoyos, 35. 28002 Madrid (España). +34 91 142 09 00</p>
-                 <div class="legales col-xs-12 col-sm-7">
+  
                   <?php print render($page['footer']); ?>
-                    <ul class="listado_pie">
-                      <li class="color_auxiliar">Síguenos en:
-                        <a target="_blank" class="icon icon_rss_twitter" href="https://twitter.com/icea_es">twitter</a>
-                        <a target="_blank" class="icon icon_rss_noticias" href="http://icea.es/es-es/noticias/paginas/subscripcionrssnoticias.aspx">rss</a>
-                      </li>
-                    </ul>
-                  </div>
-                </section>
-              </div>
-            </div>
-        </div>
+
       </footer>
 
   </div></div> <!-- /#page, /#page-wrapper -->

@@ -1,6 +1,4 @@
 
-<!DOCTYPE html>
-<html lang="en">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -46,43 +44,35 @@
             <li><a href="#" onclick="showQuizs();">Quizs</a></li>
             <li><a href="#" onclick="showStats();">Estadísticas</a></li>
           </ul>
-          <form class="navbar-form navbar-right">
-            <ul class="nav nav-pills pull-right">
-                        <li class="dropdown " id="menuLogin">
-                            <a class="dropdown-toggle" href="#" data-toggle="dropdown" id="navLogin">Login</a>
-                            <div class="dropdown-menu" style="padding:17px;">
-                                <form action="/node?destination=node" method="post" id="user-login" accept-charset="UTF-8"><div><div class="form-item form-type-textfield form-item-name">
-                                  <label for="edit-name">Username <span class="form-required" title="This field is required.">*</span></label>
-                                  <input type="text" id="edit-name" name="name" value="" size="60" maxlength="60" class="form-text required" />
-                                  <div class="description">Enter your MedQuizs username.</div>
-                                  </div>
-                                  <div class="form-item form-type-password form-item-pass">
-                                    <label for="edit-pass">Password <span class="form-required" title="This field is required.">*</span></label>
-                                    <input type="password" id="edit-pass" name="pass" size="60" maxlength="128" class="form-text required" />
-                                    <div class="description">Enter the password that accompanies your username.</div>
-                                  </div>
-                                <input type="hidden" name="form_build_id" value="form-riLiPVFRbayilDFQzzKdWlBT1mLMYFfE8CdXbTE5kmE" />
-                                <input type="hidden" name="form_id" value="user_login" />
-                                <div class="form-actions form-wrapper" id="edit-actions"><input type="submit" id="edit-submit" name="op" value="Log in" class="form-submit" /></div></div></form>
-                            </div>
-                        </li>
-                        <li class="dropdown hide" id="menuUser">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="See your Bootply collection and profile">
-                                <i class="icon-user icon-xxlarge"> </i> <span id="lblUsername"></span>
-                                <b class="caret"></b>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a href="/user">Dashboard</a></li>
-                                <li><a href="/new">Create New Bootply</a></li>
-                                
-                                <li><a href="/logout">Logout</a></li>
-                                <li class="divider"> </li>
-                                <li><a href="/bootstrap-community">Community</a></li>
-                                <li><a href="/about">About</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-          </form>
+         <?php if(!$logged_in){ ?>
+              <nav id="menuNavegacion" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 right no_login">
+                  <?php
+                      global $user;
+                      $user = user_load($user->uid);
+                      print theme('user_picture', array('account' =>$user));
+                  ?>                  
+                  <?php print render($page['header']); ?>
+                  <a id="login_button">Entrar en tu aula</a>          
+                  <div class="clear"></div>
+              </nav>
+            <?php }else{ ?>
+              <nav id="menuNavegacion" class="col-xs-4 col-sm-3 col-md-3 col-lg-3 right login">
+                <?php
+                    global $user;
+                    $user = user_load($user->uid);
+                    print theme('user_picture', array('account' =>$user));
+                ?>
+            <div class="imgUser">
+              <a id="login_button" class="right clear login">
+                <?php 
+                  if ($user->uid) { 
+                    $user_fields = user_load($user->uid);
+                    $firstname = $user_fields->field_nombre['und']['0']['value'];
+                    $lastname = $user_fields->field_apellidos['und']['0']['value'];                    
+                    print $firstname. ' ' . $lastname ; 
+                  } }
+                ?>
+              </a>
         </div>
       </div>  
     </nav>
@@ -106,4 +96,5 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="bootstrap/js/vendor/jquery.min.js"><\/script>')</script>
   </body>
-</html>
+
+ 

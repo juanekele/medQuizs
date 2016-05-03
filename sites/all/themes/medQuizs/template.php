@@ -31,7 +31,17 @@ function medQuizs_aggregator_block_item($item, $feed = 0) {
 
   return $output;
 }
-
+function medQuizs_theme()
+{
+  return array(
+    'user_profile_form' => array(
+      // Forms always take the form argument.
+      'arguments' => array('form' => NULL),
+      'render element' => 'form',
+      'template' => 'templates/user-profile-edit',
+    ),
+  );
+}
 /*Template file naming with alias*/
 function medQuizs_preprocess_page(&$vars) {
   if ($node = menu_get_object()) {

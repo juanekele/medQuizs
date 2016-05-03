@@ -1,5 +1,9 @@
 <?php
 
+function quizs_user_login(&$edit, $account) {
+  drupal_goto('<front>');
+}
+
 /**
  * Implementa hook_block_info().
  */
