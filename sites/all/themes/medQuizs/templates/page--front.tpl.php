@@ -45,35 +45,57 @@
             <li><a href="#" onclick="showStats();">Estadísticas</a></li>
           </ul>
          <?php if(!$logged_in){ ?>
-              <nav id="menuNavegacion" class="col-xs-3 col-sm-3 col-md-3 col-lg-3 right no_login">
+          <ul class="nav nav-pills pull-right">
+            <li class="dropdown " id="menuLogin">
+                <a class="dropdown-toggle" href="#" data-toggle="dropdown" id="navLogin">Login</a>
+                <div class="dropdown-menu" style="padding:17px; margin-left:-200px; width=100%;">
                   <?php
                       global $user;
                       $user = user_load($user->uid);
                       print theme('user_picture', array('account' =>$user));
                   ?>                  
-                  <?php print render($page['header']); ?>
-                  <a id="login_button">Entrar en tu aula</a>          
+                  <?php print render($page['header']); ?>        
                   <div class="clear"></div>
-              </nav>
+                </div>
+              </li>
+          </ul>
             <?php }else{ ?>
-              <nav id="menuNavegacion" class="col-xs-4 col-sm-3 col-md-3 col-lg-3 right login">
+            <ul class="nav nav-pills pull-right">
+              <div class="imgUser">
                 <?php
                     global $user;
                     $user = user_load($user->uid);
                     print theme('user_picture', array('account' =>$user));
                 ?>
-            <div class="imgUser">
-              <a id="login_button" class="right clear login">
-                <?php 
-                  if ($user->uid) { 
-                    $user_fields = user_load($user->uid);
-                    $firstname = $user_fields->field_nombre['und']['0']['value'];
-                    $lastname = $user_fields->field_apellidos['und']['0']['value'];                    
-                    print $firstname. ' ' . $lastname ; 
-                  } }
-                ?>
-              </a>
-        </div>
+              </diV>
+            </ul>
+              <ul class="nav nav-pills pull-right">
+                <li class="dropdown " id="menuLogin">
+                  <a class="dropdown-toggle" href="#" data-toggle="dropdown" id="navLogin">
+                    <?php 
+                      if ($user->uid) { 
+                        $user_fields = user_load($user->uid);
+                        //echo print_r($user_fields->name);
+                        echo $user_fields->name;                 
+                        //print $user_fields. ' ' . $lastname ; 
+                      } 
+                    }
+                    ?>
+                  </a>
+              <div class="dropdown-menu" style="padding:17px; margin-left:-150px;">
+                <ul >
+                  <li><a href="./user/<?php echo $user->uid; ?>/edit">Mi Cuenta</a></li>
+                  <li class="divider"> </li>
+                  <li><a href="./user/logout">Logout</a></li>
+                  <?php           
+                  if (module_exists('hybridauth')) {
+                      $element['#type'] = 'hybridauth_widget';
+                      print drupal_render($element);
+                  } 
+                  ?>
+                </ul>
+              </div>
+            </ul>
       </div>  
     </nav>
 

@@ -72,7 +72,6 @@
  * @ingroup themeable
  */
 ?>
-
   <div id="page-wrapper"><div id="page">
 
     <header id="mainHeader" data-role="header" >

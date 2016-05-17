@@ -10,7 +10,7 @@
     <meta name="author" content="">
     <link rel="icon" href="favicon.ico">
 
-    <title>Dashboard Template for Bootstrap</title>
+    <title>MedQuizs</title>
 
     <!-- Bootstrap core CSS -->
     <script src=" https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -46,44 +46,58 @@
             <li><a href="#" onclick="showQuizs();">Quizs</a></li>
             <li><a href="#" onclick="showStats();">Estadísticas</a></li>
           </ul>
-          <form class="navbar-form navbar-right">
+         <?php if(!$logged_in){ ?>
+          <ul class="nav nav-pills pull-right">
+            <li class="dropdown " id="menuLogin">
+                <a class="dropdown-toggle" href="#" data-toggle="dropdown" id="navLogin">Login</a>
+                <div class="dropdown-menu" style="padding:17px; margin-left:-200px; width=100%;">
+                  <?php
+                      global $user;
+                      $user = user_load($user->uid);
+                      print theme('user_picture', array('account' =>$user));
+                  ?>                  
+                  <?php print render($page['header']); ?>        
+                  <div class="clear"></div>
+                </div>
+              </li>
+          </ul>
+            <?php }else{ ?>
             <ul class="nav nav-pills pull-right">
-                        <li class="dropdown " id="menuLogin">
-                            <a class="dropdown-toggle" href="#" data-toggle="dropdown" id="navLogin">Login</a>
-                            <div class="dropdown-menu" style="padding:17px;">
-                                <form action="/node?destination=node" method="post" id="user-login" accept-charset="UTF-8"><div><div class="form-item form-type-textfield form-item-name">
-                                  <label for="edit-name">Username <span class="form-required" title="This field is required.">*</span></label>
-                                  <input type="text" id="edit-name" name="name" value="" size="60" maxlength="60" class="form-text required" />
-                                  <div class="description">Enter your MedQuizs username.</div>
-                                  </div>
-                                  <div class="form-item form-type-password form-item-pass">
-                                    <label for="edit-pass">Password <span class="form-required" title="This field is required.">*</span></label>
-                                    <input type="password" id="edit-pass" name="pass" size="60" maxlength="128" class="form-text required" />
-                                    <div class="description">Enter the password that accompanies your username.</div>
-                                  </div>
-                                <input type="hidden" name="form_build_id" value="form-riLiPVFRbayilDFQzzKdWlBT1mLMYFfE8CdXbTE5kmE" />
-                                <input type="hidden" name="form_id" value="user_login" />
-                                <div class="form-actions form-wrapper" id="edit-actions"><input type="submit" id="edit-submit" name="op" value="Log in" class="form-submit" /></div></div></form>
-                            </div>
-                        </li>
-                        <li class="dropdown hide" id="menuUser">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="See your Bootply collection and profile">
-                                <i class="icon-user icon-xxlarge"> </i> <span id="lblUsername"></span>
-                                <b class="caret"></b>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a href="/user">Dashboard</a></li>
-                                <li><a href="/new">Create New Bootply</a></li>
-                                
-                                <li><a href="/logout">Logout</a></li>
-                                <li class="divider"> </li>
-                                <li><a href="/bootstrap-community">Community</a></li>
-                                <li><a href="/about">About</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-          </form>
-        </div>
+              <div class="imgUser">
+                <?php
+                    global $user;
+                    $user = user_load($user->uid);
+                    print theme('user_picture', array('account' =>$user));
+                ?>
+              </diV>
+            </ul>
+              <ul class="nav nav-pills pull-right">
+                <li class="dropdown " id="menuLogin">
+                  <a class="dropdown-toggle" href="#" data-toggle="dropdown" id="navLogin">
+                    <?php 
+                      if ($user->uid) { 
+                        $user_fields = user_load($user->uid);
+                        //echo print_r($user_fields->name);
+                        echo $user_fields->name;                 
+                        //print $user_fields. ' ' . $lastname ; 
+                      } 
+                    }
+                    ?>
+                  </a>
+              <div class="dropdown-menu" style="padding:17px; margin-left:-150px;">
+                <ul >
+                  <li><a href="./user/<?php echo $user->uid; ?>/edit">Mi Cuenta</a></li>
+                  <li class="divider"> </li>
+                  <li><a href="./user/logout">Logout</a></li>
+                  <?php           
+                  if (module_exists('hybridauth')) {
+                      $element['#type'] = 'hybridauth_widget';
+                      print drupal_render($element);
+                  } 
+                  ?>
+                </ul>
+              </div>
+            </ul>
       </div>  
     </nav>
 

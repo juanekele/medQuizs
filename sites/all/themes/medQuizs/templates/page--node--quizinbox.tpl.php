@@ -46,48 +46,123 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li><a href="#">Inicio</a></li>
-            <li><a href="#">Quizs</a></li>
-            <li><a href="#">Estadísticas</a></li>
+            <li><a href="#" onclick="showInicio();">Inicio</a></li>
+            <li><a href="#" onclick="showQuizs();">Quizs</a></li>
+            <li><a href="#" onclick="showStats();">Estadísticas</a></li>
           </ul>
-          <form class="navbar-form navbar-right">
+         <?php if(!$logged_in){ ?>
+          <ul class="nav nav-pills pull-right">
+            <li class="dropdown " id="menuLogin">
+                <a class="dropdown-toggle" href="#" data-toggle="dropdown" id="navLogin">Login</a>
+                <div class="dropdown-menu" style="padding:17px; margin-left:-200px; width=100%;">
+                  <?php
+                      global $user;
+                      $user = user_load($user->uid);
+                      print theme('user_picture', array('account' =>$user));
+                  ?>                  
+                  <?php print render($page['header']); ?>        
+                  <div class="clear"></div>
+                </div>
+              </li>
+          </ul>
+            <?php }else{ ?>
             <ul class="nav nav-pills pull-right">
-                        <li class="dropdown " id="menuLogin">
-                            <a class="dropdown-toggle" href="#" data-toggle="dropdown" id="navLogin">Login</a>
-                            <div class="dropdown-menu" style="padding:17px;">
-                                <form id="formLogin" class="form"> 
-                                    <label>Login</label> 
-                                    <input name="_csrf" id="token" type="hidden" value="8i7LVkui-AT76QrkKDkht_fmgpkfLIkEDZ0I">
-                      <input name="username" id="username" type="text" placeholder="Username" pattern="^[a-z,A-Z,0-9,_]{6,15}$" data-valid-min="6" title="Enter your username" required="">
-                      <input name="password" id="password" type="password" placeholder="Password" title="Enter your password" required=""><br>
-                      <button type="button" id="btnLogin" class="btn">Login</button>
-                  </form>
-                            </div>
-                        </li>
-                        <li class="dropdown hide" id="menuUser">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="See your Bootply collection and profile">
-                                <i class="icon-user icon-xxlarge"> </i> <span id="lblUsername"></span>
-                                <b class="caret"></b>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a href="/user">Dashboard</a></li>
-                                <li><a href="/new">Create New Bootply</a></li>
-                                
-                                <li><a href="/logout">Logout</a></li>
-                                <li class="divider"> </li>
-                                <li><a href="/bootstrap-community">Community</a></li>
-                                <li><a href="/about">About</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-          </form>
-        </div>
+              <div class="imgUser">
+                <?php
+                    global $user;
+                    $user = user_load($user->uid);
+                    print theme('user_picture', array('account' =>$user));
+                ?>
+              </diV>
+            </ul>
+              <ul class="nav nav-pills pull-right">
+                <li class="dropdown " id="menuLogin">
+                  <a class="dropdown-toggle" href="#" data-toggle="dropdown" id="navLogin">
+                    <?php 
+                      if ($user->uid) { 
+                        $user_fields = user_load($user->uid);
+                        //echo print_r($user_fields->name);
+                        echo $user_fields->name;                 
+                        //print $user_fields. ' ' . $lastname ; 
+                      } 
+                    }
+                    ?>
+                  </a>
+              <div class="dropdown-menu" style="padding:17px; margin-left:-150px;">
+                <ul >
+                  <li><a href="./user/<?php echo $user->uid; ?>/edit">Mi Cuenta</a></li>
+                  <li class="divider"> </li>
+                  <li><a href="./user/logout">Logout</a></li>
+                  <?php           
+                  if (module_exists('hybridauth')) {
+                      $element['#type'] = 'hybridauth_widget';
+                      print drupal_render($element);
+                  } 
+                  ?>
+                </ul>
+              </div>
+            </ul>
       </div>  
     </nav>
 
 
       <div class="container-fluid">
-      <?php print render($page['sidebar']); ?>
+      <?php print render($page['sidebar']);
+
+if(isset($_GET['action']))
+{
+  $address="127.0.0.1";
+  $port="22";
+  $msg="1234";
+
+  $sock=socket_create(AF_INET,SOCK_STREAM,0) or die("Cannot create a socket");
+  socket_connect($sock,$address,$port) or die("Could not connect to the socket");
+  $read=socket_read($sock,1024);
+  socket_write($sock,$msg."\n");
+  $read=socket_read($sock,1024);
+  socket_write($sock,"1"."\n");
+  $read=socket_read($sock,1024);
+  socket_write($sock,"2"."\n");
+
+
+
+  socket_close($sock);
+}
+
+/* Create a TCP/IP socket. */
+/*$socket = socket_create(AF_INET, SOCK_STREAM, 0);
+if ($socket === false) {
+    echo "socket_create() failed: reason: " . socket_strerror(socket_last_error()) . "<br />";
+} else {
+    echo "OK.<br />";
+}
+echo "Attempting to connect to '$address' on port '$service_port'...";
+$result = socket_connect($socket, $address, $service_port);
+if ($result === false) {
+    echo "socket_connect() failed.<br />Reason: ($result) " . socket_strerror(socket_last_error($socket)) . "<br />";
+} else {
+    echo "OK.<br />";
+}
+
+//socket_accept($socket);
+
+//$result = socket_read ($socket, 1024) or die("Could not read server response\n");
+//echo $result;
+/*$in="1234";
+$in2="1";
+$in3="1";
+$out = '';
+
+echo "Sending HTTP HEAD request...";
+socket_write($socket, $in, strlen($in));
+socket_write($socket, $in2, strlen($in2));
+socket_write($socket, $in3, strlen($in3));
+*/
+
+
+
+
+       ?>
       <div class="col-md-8 col-md-offset-2">
         <div style="clear: both; margin-top: 50px;"></div>
         <h3>Encuestas propuestas por los usuarios</h3>

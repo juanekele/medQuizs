@@ -58,7 +58,7 @@ function progreso()
               <img class="img" src="sites/all/themes/medQuizs/assets/images/'.$key->name.'.jpg">
               <div style="clear: both; margin-top: 20px;"></div>
               <canvas id="'.$key->name.'" class="results"> 
-                <script>rellenaGraf('.$datos[A].',"#Q1A",'.$datos[B].',"#Q1B",'.$datos[C].',"#Q1C",'.$datos[D].',"#Q1D","'.$key->name.'");</script> 
+                <script>rellenaGraf('.$datos[A].',"A",'.$datos[B].',"B",'.$datos[C].',"C",'.$datos[D].',"D","'.$key->name.'");</script> 
               </canvas>
             </div>
           </div>

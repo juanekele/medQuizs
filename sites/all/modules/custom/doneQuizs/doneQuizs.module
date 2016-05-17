@@ -26,7 +26,6 @@ function answered()
 {
   global $user;
   $user_data=$user->data['hybridauth'];
-  print_r($user_data,true);
   $html='<div class="col-md-6 col-md-offset-2">
           <div style="clear: both; margin-top: 10px;"></div>';
 
