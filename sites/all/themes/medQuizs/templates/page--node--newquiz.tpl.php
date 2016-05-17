@@ -101,32 +101,36 @@
 
 
       <div class="container-fluid">
-      <?php print render($page['sidebar']); ?>
+      <?php print render($page['sidebar']);?>
+
       <div class="col-md-6 col-md-offset-2">
         <div style="clear: both; margin-top: 25px;"></div>
 
-        <form action="" role="form">
+        <form action="?" method="post" role="form">
           <div class="form-group">
+            <label for="title">Título de la Encuesta:</label>
+            <input name="title" style="width: 400px;" type="text" class="form-control pregunta" id="title" placeholder="Introduce el título">
+            <br>
             <label for="quiz">Pregunta (140 Caracteres) </label>
-            <textarea style="margin: 0px 318px 0px 0px; height: 97px; width: 400px;" type="text" class="form-control" id="quiz"
+            <textarea name="quiz" style="margin: 0px 318px 0px 0px; height: 97px; width: 400px;" type="text" class="form-control" id="quiz"
                    placeholder="Introduce La Pregunta"></textarea>
           </div>
           <div class="form-group">
 
             <label for="res_A">Respuesta A:</label>
-            <input style="width: 400px;" type="text" class="form-control pregunta" id="res_A" placeholder="Introduce la respuesta A">
+            <input name="res_a" style="width: 400px;" type="text" class="form-control pregunta" id="res_A" placeholder="Introduce la respuesta A">
             <br>
             <label for="res_B">Respuesta B:</label>
-            <input style="width: 400px;" type="text" class="form-control pregunta" id="res_B" placeholder="Introduce la respuesta B">
+            <input name="res_b" style="width: 400px;" type="text" class="form-control pregunta" id="res_B" placeholder="Introduce la respuesta B">
             <br>
             <label for="res_C">Respuesta C:</label>
-            <input style="width: 400px;" type="text" class="form-control pregunta" id="res_C" placeholder="Introduce la respuesta C">
+            <input name="res_c" style="width: 400px;" type="text" class="form-control pregunta" id="res_C" placeholder="Introduce la respuesta C">
             <br>
             <label for="res_D">Respuesta D:</label>
-            <input style="width: 400px;" type="text" class="form-control pregunta" id="res_D" placeholder="Introduce la respuesta D">
+            <input name="res_d" style="width: 400px;" type="text" class="form-control pregunta" id="res_D" placeholder="Introduce la respuesta D">
             <br>
             <label for="correct">Respuesta Correcta:</label>
-            <select style="width: 400px;" class="form-control" id="correct">
+            <select name="correct" style="width: 400px;" class="form-control" id="correct">
               <option>A</option>
               <option>B</option>
               <option>C</option>
@@ -134,14 +138,44 @@
             </select>
 
           </div>
-          <button type="submit" class="btn btn-default">Enviar</button>
+          <button name="submit" type="submit" class="btn btn-default">Enviar</button>
         </form>
         </div>
     </div>
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
+    <?php 
+
+    if(isset($_POST['quiz']) ){
+
+      $title=$_POST['title'];
+      if(sizeof($_POST['title']==0))
+      {
+        $title=substr($_POST['quiz'], 0,15);
+      }
+      $sql="INSERT INTO quiz SET content='$_POST[quiz]', validado=0,publicado=0,correcta='$_POST[correct]',creator_id=$user->uid, fecha=NOW(), title='$title'";
+      db_query($sql);
+      $select="SELECT id FROM quiz WHERE content='$_POST[quiz]'";
+      $result=db_query($select);
+      foreach ($result as $key) {
+        $id=$key->id;
+      }
+      $update="UPDATE quiz SET name='Q".$id."' WHERE id=$id";
+      db_query($update);
+      $correct_A=('A'== $_POST['correcta']);
+      $insertA="INSERT INTO quiz_hashtag SET id_quiz=$id,value='Q".$id."A'";
+      $insertB="INSERT INTO quiz_hashtag SET id_quiz=$id,value='Q".$id."B'";
+      $insertC="INSERT INTO quiz_hashtag SET id_quiz=$id,value='Q".$id."C'";
+      $insertD="INSERT INTO quiz_hashtag SET id_quiz=$id,value='Q".$id."D'";
+      db_query($insertA);
+      db_query($insertB);
+      db_query($insertC);
+      db_query($insertD);
+    }
+
+
+    ?>
+
 
   </body>
 </html>
+

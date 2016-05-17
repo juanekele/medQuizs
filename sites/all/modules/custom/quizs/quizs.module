@@ -26,6 +26,21 @@ function quizs_block_view($delta = "") {
   }
 }
 
+function quizs_menu() {
+  $menu['ajax/callback/validar/%'] = array (
+    'title' => '',
+    'page callback' => 'validar',
+    'page arguments' => array(3), // 3 is the menu index
+    'access callback' => TRUE, // allows access to any user
+  );
+  return $menu;
+}
+function validar($value)
+{
+  $sql="UPDATE quiz SET validado=1 WHERE id=".$_GET['id'];
+  db_query($sql);
+}
+
 function progreso()
 {
 
@@ -55,7 +70,7 @@ function progreso()
             $html.='<div class="panel panel-primary"> 
         <div class="panel-heading">'.$key->name.'</div>
             <div class="panel-body">
-              <img class="img" src="sites/all/themes/medQuizs/assets/images/'.$key->name.'.jpg">
+              <img class="img" src="sandra/images/'.$key->name.'.jpg" style="width:40%; height:5%">
               <div style="clear: both; margin-top: 20px;"></div>
               <canvas id="'.$key->name.'" class="results"> 
                 <script>rellenaGraf('.$datos[A].',"A",'.$datos[B].',"B",'.$datos[C].',"C",'.$datos[D].',"D","'.$key->name.'");</script> 

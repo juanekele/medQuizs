@@ -12,21 +12,8 @@
 
     <title>MediQuizs</title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
-    <script src="./bootstrap/js/jquery.tablesorter.js"></script>
-    <script src="./bootstrap/js/jquery.tablesorter.min.js"></script>
-    <script src="./bootstrap/js/mediQuizs.js"></script>
-    <!-- Custom styles for this template -->
-    <link href="dashboard.css" rel="stylesheet">
 
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
   </head>
 
   <body>
@@ -109,25 +96,8 @@
       <div class="container-fluid">
       <?php print render($page['sidebar']);
 
-if(isset($_GET['action']))
-{
-  $address="127.0.0.1";
-  $port="22";
-  $msg="1234";
-
-  $sock=socket_create(AF_INET,SOCK_STREAM,0) or die("Cannot create a socket");
-  socket_connect($sock,$address,$port) or die("Could not connect to the socket");
-  $read=socket_read($sock,1024);
-  socket_write($sock,$msg."\n");
-  $read=socket_read($sock,1024);
-  socket_write($sock,"1"."\n");
-  $read=socket_read($sock,1024);
-  socket_write($sock,"2"."\n");
 
 
-
-  socket_close($sock);
-}
 
 /* Create a TCP/IP socket. */
 /*$socket = socket_create(AF_INET, SOCK_STREAM, 0);
@@ -177,32 +147,42 @@ socket_write($socket, $in3, strlen($in3));
               <th><a>Acción</a></th>
               <th><a>Ver</a></th>
             </tr>
-            <tr>
-              <td>Quiz35</td>
-              <td>@juanekele</td>
-              <td>07-03-2016</td>
-              <td>Pendiente </td>
-              <td><button>Publicar</button></td>
-              <td>Ver</td>
-            </tr>
-            <tr>
-              <td>Quiz36</td>
-              <td>@juanekele</td>
-              <td>07-03-2016</td>
-              <td>Aceptada</td>
-              <td><button>Publicar</button></td>
-              <td>Ver</td>
-            </tr>
+            <?php 
+            $query="SELECT * FROM quiz WHERE  validado=0 OR publicado=0";
+            $result=db_query($query);
+
+            foreach ($result as $quiz) {
+
+            $sqlName="SELECT name FROM users where uid=$quiz->creator_id";
+            $resultName=db_query($sqlName);
+            foreach ($resultName as $key) {
+              $name=$key->name;
+            }
+            echo '<tr>
+                    <td>'.$quiz->title.'</td>
+                    <td>'.$name.'</td>
+                    <td>'.$quiz->fecha.'</td>';
+            if($quiz->validado==0)
+            {
+              $estado='Pendiente';
+              $accion='<button onclick="validar('.$quiz->id.')">Validar</button>';
+            }
+            else
+            {
+              $estado='Aceptado';
+              $accion='<button onclick="publicar('.$quiz->id.')">Publicar</button>';
+            }
+                  echo  '<td>'.$estado.'</td>
+                    <td>'.$accion.'</td>
+                    <td>Ver</td>
+                  </tr>';
+            }
+            ?>
           </table>
         </div>
       </div>
     </div>
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="bootstrap/js/vendor/jquery.min.js"><\/script>')</script>
-    <script src="./bootstrap/js/bootstrap.min.js"></script>
+
   </body>
 </html>

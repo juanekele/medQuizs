@@ -107,3 +107,48 @@ $.fn.centrar = function () {
 
 
 }
+
+
+
+function publicar(quiz_id)
+{
+  $.ajax({
+      type: "GET",
+      async: true,
+      url: '/medquizs/sandra/socketSandra.php',
+      data: {
+          action: '1',
+          id: quiz_id
+      },
+      success: function(data) {
+        location.reload();
+          //console.log("success");
+
+      },
+      error: function(data) {
+        alert("Hubo un error al realizar la operación");
+          console.log("error");
+      }
+  });
+}
+
+function validar(quiz_id)
+{
+  $.ajax({
+      type: "GET",
+      async: true,
+      url: '/medquizs/ajax/callback/validar/100',
+      data: {
+          id: quiz_id
+      },
+      success: function(data) {
+        location.reload();
+          //console.log("success");
+
+      },
+      error: function(data) {
+        alert("Hubo un error al realizar la operación");
+          console.log("error");
+      }
+  });
+}
