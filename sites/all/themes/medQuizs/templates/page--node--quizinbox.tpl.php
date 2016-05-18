@@ -180,6 +180,12 @@ socket_write($socket, $in3, strlen($in3));
             ?>
           </table>
         </div>
+
+        <div style="clear: both; margin-top: 50px;"></div>
+        Para recuperar las últimas respuestas a los quizs publicados haga click aqui:
+        <button onclick="getTweets()">Guardar Tweets</button>
+
+
       </div>
     </div>
 

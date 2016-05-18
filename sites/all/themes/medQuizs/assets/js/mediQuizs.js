@@ -108,7 +108,26 @@ $.fn.centrar = function () {
 
 }
 
+function getTweets()
+{
+  $.ajax({
+      type: "GET",
+      async: true,
+      url: '/medquizs/sandra/socketSandra.php',
+      data: {
+          action: '2',
+      },
+      success: function(data) {
+        location.reload();
+          //console.log("success");
 
+      },
+      error: function(data) {
+        alert("Hubo un error al realizar la operación");
+          console.log("error");
+      }
+  });
+}
 
 function publicar(quiz_id)
 {
