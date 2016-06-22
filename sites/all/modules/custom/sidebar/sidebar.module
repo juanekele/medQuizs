@@ -24,14 +24,19 @@ function sidebar_block_view($delta = "") {
 
 function side()
 {
+  global $user;
   $html='<div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
             <li id="inicio" class="active"><a href="./">Inicio </a></li>
             <li id="myQuizs"><a href="doneQuizs">Mis Respuestas</a></li>
             <li id="pendingQuizs"><a href="pendingQuizs">Quizs Pendientes</a></li>
-            <li id="newQuiz"><a href="newQuiz">Propón Preguntas</a></li>
-            <li id="quizInbox"><a href="quizInbox">Buzón de Preguntas</a></li>
-          </ul>
+            <li id="newQuiz"><a href="newQuiz">Propón Preguntas</a></li>';
+if($user->name=="admin")
+{
+  $html.='<li id="quizInbox"><a href="quizInbox">Buzón de Preguntas</a></li>';
+}
+
+          $html.='</ul>
         </div>';
 
   return $html;

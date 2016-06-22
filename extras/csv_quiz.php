@@ -1,28 +1,20 @@
-<!DOCTYPE html>
-<html>
+
 <?php
 
-echo '<form action="?" method="post" enctype="multipart/form-data"> 
-    <b>Campo de tipo texto:</b> 
-    <br> 
-    <input type="text" name="cadenatexto" size="20" maxlength="100"> 
-    <input type="hidden" name="MAX_FILE_SIZE" value="100000"> 
-    <br> 
-    <br> 
-    <b>Enviar un nuevo archivo: </b> 
-    <br> 
-    <input name="userfile" type="file"> 
-    <br> 
-    <input type="submit" value="Enviar"> 
-</form>abrir php co';
-
-if(isset($_POST['quiz']) ){
-    $mysqli = new mysqli('localhost', 'root', '1234', 'medquizs');
+    $mysqli = new mysqli('localhost', 'root', '', 'medquizs');
 
     $fila = 1;
-    if (($gestor = fopen("datos.csv", "r")) !== FALSE) {
+     $dir_subida = './csv/';
+        $fichero_subido = $dir_subida . basename($_FILES['csv']['name']);
+        echo print_r($_FILES,true);
+        if (move_uploaded_file($_FILES['csv']['tmp_name'], $fichero_subido)) {
+            error_log( "El csv se cargó correctamente");
+        } else {
+            error_log("Hubo un error al subir el csv");
+        }
+    if (($gestor = fopen($fichero_subido, "r")) !== FALSE) {
     	$data=array();
-        while (($datos = fgetcsv($gestor, 1000, ",")) !== FALSE) {
+        while (($datos = fgetcsv($gestor, 1000, ";")) !== FALSE) {
             $numero = count($datos);
            // echo "<p> $numero de campos en la línea $fila: <br /></p>\n";
             if($fila==1)
@@ -46,20 +38,20 @@ if(isset($_POST['quiz']) ){
         foreach ($data as $fila) {
               
             $title=$fila['titulo'];
-            if(strlen($fila['titulo']==0))
+            if(strlen($fila['titulo'])==0)
             {
                 $title=substr($fila['pregunta'], 0,15);
             }
-            $sql="INSERT INTO quiz SET content='$fila[pregunta]', validado=1,publicado=0,correcta='$fila[correcta]',creator_id='', fecha=NOW(), title='$title'";
+            $sql="INSERT INTO quiz SET content='$fila[pregunta]', validado=1,publicado=0,correcta='$fila[correcta]',creator_id='1', fecha=NOW(), title='$title'";
             $mysqli->query($sql);
             $id=$mysqli->insert_id;
             $update="UPDATE quiz SET name='Q".$id."' WHERE id=$id";
             $mysqli->query($update);
             $correct_A=('A'== $fila['correcta']);
-            $insertA="INSERT INTO quiz_hashtag SET id_quiz=$id,value='Q".$id."A ".$fila['ra']."'";
-            $insertB="INSERT INTO quiz_hashtag SET id_quiz=$id,value='Q".$id."B ".$fila['rb']."'";
-            $insertC="INSERT INTO quiz_hashtag SET id_quiz=$id,value='Q".$id."C ".$fila['rc']."'";
-            $insertD="INSERT INTO quiz_hashtag SET id_quiz=$id,value='Q".$id."D ".$fila['rd']."'";
+            $insertA="INSERT INTO quiz_hashtag SET id_quiz=$id,value='#Q".$id."A ".$fila['ra']."'";
+            $insertB="INSERT INTO quiz_hashtag SET id_quiz=$id,value='#Q".$id."B ".$fila['rb']."'";
+            $insertC="INSERT INTO quiz_hashtag SET id_quiz=$id,value='#Q".$id."C ".$fila['rc']."'";
+            $insertD="INSERT INTO quiz_hashtag SET id_quiz=$id,value='#Q".$id."D ".$fila['rd']."'";
             $mysqli->query($insertA);
             $mysqli->query($insertB);
             $mysqli->query($insertC);
@@ -71,7 +63,7 @@ if(isset($_POST['quiz']) ){
         	select
         }*/
         $mysqli->close();
+        header("Location: /medquizs/newQuiz");
     }
-}
+
 ?>
-</html>

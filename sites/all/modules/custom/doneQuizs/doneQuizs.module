@@ -28,45 +28,90 @@ function answered()
   $user_data=$user->data['hybridauth'];
   $html='<div class="col-md-6 col-md-offset-2">
           <div style="clear: both; margin-top: 10px;"></div>';
-
-          $sql="SELECT * FROM quiz WHERE publicado=1 and id in (select id_quiz from tweet where user_id =".$user_data['identifier']." )";
-          error_log($sql);
-          $result=db_query($sql);
-          if(!$result)
+          if(isset($user_data['identifier']))
           {
-            $html.="NO TIENES QUIZS PENDIENTES";
-          }
-          foreach ($result as $key) {
+            $sql="SELECT * FROM quiz WHERE publicado=1 and id in (select id_quiz from tweet where user_id =".$user_data['identifier']." )";
+            $result=db_query($sql);
+            $hay=false;
+            foreach ($result as $key) {
+              if(is_object($key))
+              {
+                $hay=true;
+                $sqlHashtags="SELECT * FROM tweet WHERE id_quiz=".$key->id;
+                $resultHashtags=db_query($sqlHashtags);
+                $datos=array();
+                foreach ($resultHashtags as $row) {
+                  $respuestaUser=$row->answer;
+                  $sqlDatos="SELECT answer,count(*) cuenta FROM tweet WHERE id_quiz =".$key->id." group by answer";
+                  $resultDatos=db_query($sqlDatos);
+                  foreach ($resultDatos as $dato) {
+                    $respuesta=$dato->cuenta;
+                    $datos[$dato->answer]=$respuesta;
+                  }
+                }
+                if(!isset($datos[A])){$datos[A]=0;}
+                if(!isset($datos[B])){$datos[B]=0;}
+                if(!isset($datos[C])){$datos[C]=0;}
+                if(!isset($datos[D])){$datos[D]=0;}
+                $porcentajeUser=$datos[$respuestaUser]*100/($datos[A]+$datos[B]+$datos[C]+$datos[D]);
+                $html.='<div class="panel panel-primary"> 
+          <div class="panel-heading">'.$key->name.'</div>
+              <div class="panel-body">
+                <table class="borderless">
+                <td style="width:40%"><img class="left-block" src="sandra/images/'.$key->name.'.jpg"></td>
+                <td style="width:20%">
+                  <button class="respuesta">
+                    <p>Tu respuesta fue: '.$respuestaUser.',</p> 
+                    <p>como el '.$porcentajeUser.'% de los usuarios</p>
+                  </button>
+                </td>
+                
+                <td><canvas id="'.$key->name.'" class="results"> 
+                  <script>rellenaGraf('.$datos[A].',"A",'.$datos[B].',"B",'.$datos[C].',"C",'.$datos[D].',"D","'.$key->name.'");</script> 
+                </canvas></td>
+                </table>
+                
+              </div>
 
-            $sqlHashtags="SELECT * FROM tweet WHERE id_quiz=".$key->id;
-            $resultHashtags=db_query($sqlHashtags);
-            $datos=array();
-            foreach ($resultHashtags as $row) {
-              $sqlDatos="SELECT answer,count(*) cuenta FROM tweet WHERE id_quiz =".$key->id." group by answer";
-              $resultDatos=db_query($sqlDatos);
-              foreach ($resultDatos as $dato) {
-                $respuesta=$dato->cuenta;
-                $datos[$dato->answer]=$respuesta;
+            </div>
+                     
+            <div style="clear: both; margin-top: 10px;"></div>';
+
+
+                /*$html.='<div class="panel panel-primary"> 
+            <div class="panel-heading">'.$key->name.'</div>
+                <div class="panel-body">
+                  <img onclick="javascript:this.width=750;this.height=500 ;" 
+    onclick="javascript:this.width=225;this.height= 150;" class="img" src="sandra/images/'.$key->name.'.jpg" style="width: 20%;
+    height: 30%;
+    position: fixed;">
+                  <div style="clear: both; margin-top: 20px;"></div>
+                  <div style="margin-left:48% "><button style="display: inline-block;
+  border-radius: 4px;
+  background-color: #337ab7;
+  border: none;
+  color: #FFFFFF;
+  font-size: 14px;
+  width: 32%;
+  margin: 5px;"><p>Tu respuesta fue: '.$respuestaUser.',</p> <p>como el '.$porcentajeUser.'% de los usuarios</p></div>
+                  <canvas id="'.$key->name.'" class="results" style="margin-top:-100px"> 
+                    <script>rellenaGraf('.$datos[A].',"#Q1A",'.$datos[B].',"#Q1B",'.$datos[C].',"#Q1C",'.$datos[D].',"#Q1D","'.$key->name.'");</script> 
+                  </canvas>
+                </div>
+              </div>
+                       
+              <div style="clear: both; margin-top: 10px;"></div>';*/
               }
             }
-            if(!isset($datos[A])){$datos[A]=0;}
-            if(!isset($datos[B])){$datos[B]=0;}
-            if(!isset($datos[C])){$datos[C]=0;}
-            if(!isset($datos[D])){$datos[D]=0;}
-            $html.='<div class="panel panel-primary"> 
-        <div class="panel-heading">'.$key->name.'</div>
-            <div class="panel-body">
-              <img class="img" src="sites/all/themes/medQuizs/assets/images/'.$key->name.'.jpg">
-              <div style="clear: both; margin-top: 20px;"></div>
-              <canvas id="'.$key->name.'" class="results"> 
-                <script>rellenaGraf('.$datos[A].',"#Q1A",'.$datos[B].',"#Q1B",'.$datos[C].',"#Q1C",'.$datos[D].',"#Q1D","'.$key->name.'");</script> 
-              </canvas>
-            </div>
-          </div>
-                   
-          <div style="clear: both; margin-top: 10px;"></div>';
+            if(!$hay)
+            {
+              $html.="Aún no has respondido ningún quiz en Twitter";
+            }
           }
-          
+          else
+          {
+            $html.='Aun no has asociado tu cuenta de Twitter con la aplicación';
+          }          
   $html.='</div>           
         </div>';
 

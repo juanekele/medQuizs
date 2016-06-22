@@ -81,7 +81,7 @@
                   <li class="divider"> </li>
                   <li><a href="./user/logout">Logout</a></li>
                   <?php           
-                  if (module_exists('hybridauth')) {
+                  if (module_exists('hybridauth') && !$logged_in) {
                       $element['#type'] = 'hybridauth_widget';
                       print drupal_render($element);
                   } 
@@ -150,32 +150,39 @@ socket_write($socket, $in3, strlen($in3));
             <?php 
             $query="SELECT * FROM quiz WHERE  validado=0 OR publicado=0";
             $result=db_query($query);
-
+            $hay=false;
             foreach ($result as $quiz) {
-
-            $sqlName="SELECT name FROM users where uid=$quiz->creator_id";
-            $resultName=db_query($sqlName);
-            foreach ($resultName as $key) {
-              $name=$key->name;
+              if(is_object($quiz))
+              {
+                $hay=true;
+                $sqlName="SELECT name FROM users where uid=".$quiz->creator_id;
+                $resultName=db_query($sqlName);
+                foreach ($resultName as $key) {
+                  $name=$key->name;
+                }
+                echo '<tr>
+                        <td>'.$quiz->title.'</td>
+                        <td>'.$name.'</td>
+                        <td>'.$quiz->fecha.'</td>';
+                if($quiz->validado==0)
+                {
+                  $estado='Pendiente';
+                  $accion='<button onclick="validar('.$quiz->id.')">Validar</button>';
+                }
+                else
+                {
+                  $estado='Aceptado';
+                  $accion='<button onclick="publicar('.$quiz->id.')">Publicar</button>';
+                }
+                      echo  '<td>'.$estado.'</td>
+                        <td>'.$accion.'</td>
+                        <td>Ver</td>
+                      </tr>';
+              }
             }
-            echo '<tr>
-                    <td>'.$quiz->title.'</td>
-                    <td>'.$name.'</td>
-                    <td>'.$quiz->fecha.'</td>';
-            if($quiz->validado==0)
+            if(!$hay)
             {
-              $estado='Pendiente';
-              $accion='<button onclick="validar('.$quiz->id.')">Validar</button>';
-            }
-            else
-            {
-              $estado='Aceptado';
-              $accion='<button onclick="publicar('.$quiz->id.')">Publicar</button>';
-            }
-                  echo  '<td>'.$estado.'</td>
-                    <td>'.$accion.'</td>
-                    <td>Ver</td>
-                  </tr>';
+              echo '<td>No hay encuestas pendientes</td><td></td><td><td></td><td></td><td></td>';
             }
             ?>
           </table>

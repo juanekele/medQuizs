@@ -61,7 +61,7 @@
                   <li class="divider"> </li>
                   <li><a href="./user/logout">Logout</a></li>
                   <?php           
-                  if (module_exists('hybridauth')) {
+                  if (module_exists('hybridauth') && !$logged_in) {
                       $element['#type'] = 'hybridauth_widget';
                       print drupal_render($element);
                   } 

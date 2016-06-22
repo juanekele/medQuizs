@@ -88,7 +88,7 @@
                   <li class="divider"> </li>
                   <li><a href="./user/logout">Logout</a></li>
                   <?php           
-                  if (module_exists('hybridauth')) {
+                  if (module_exists('hybridauth') && !$logged_in) {
                       $element['#type'] = 'hybridauth_widget';
                       print drupal_render($element);
                   } 
@@ -117,17 +117,17 @@
           </div>
           <div class="form-group">
 
-            <label for="res_A">Respuesta A:</label>
-            <input name="res_a" style="width: 400px;" type="text" class="form-control pregunta" id="res_A" placeholder="Introduce la respuesta A">
+            <label for="res_a">Respuesta A:</label>
+            <input name="res_a" style="width: 400px;" type="text" class="form-control pregunta" id="res_a" placeholder="Introduce la respuesta A">
             <br>
-            <label for="res_B">Respuesta B:</label>
-            <input name="res_b" style="width: 400px;" type="text" class="form-control pregunta" id="res_B" placeholder="Introduce la respuesta B">
+            <label for="res_b">Respuesta B:</label>
+            <input name="res_b" style="width: 400px;" type="text" class="form-control pregunta" id="res_b" placeholder="Introduce la respuesta B">
             <br>
-            <label for="res_C">Respuesta C:</label>
-            <input name="res_c" style="width: 400px;" type="text" class="form-control pregunta" id="res_C" placeholder="Introduce la respuesta C">
+            <label for="res_c">Respuesta C:</label>
+            <input name="res_c" style="width: 400px;" type="text" class="form-control pregunta" id="res_c" placeholder="Introduce la respuesta C">
             <br>
-            <label for="res_D">Respuesta D:</label>
-            <input name="res_d" style="width: 400px;" type="text" class="form-control pregunta" id="res_D" placeholder="Introduce la respuesta D">
+            <label for="res_d">Respuesta D:</label>
+            <input name="res_d" style="width: 400px;" type="text" class="form-control pregunta" id="res_d" placeholder="Introduce la respuesta D">
             <br>
             <label for="correct">Respuesta Correcta:</label>
             <select name="correct" style="width: 400px;" class="form-control" id="correct">
@@ -136,19 +136,40 @@
               <option>C</option>
               <option>D</option>
             </select>
-
           </div>
           <button name="submit" type="submit" class="btn btn-default">Enviar</button>
         </form>
+        <?php 
+        if($user->name=="admin")
+        {
+        ?>
+        <br>
+        <br>
+        <form method="post" action="/medquizs/extras/csv_quiz.php" enctype="multipart/form-data">
+          <b>Sube Un CSV con las encuestas</b> 
+         <input type="file" name="csv" /> 
+         <br>
+         <button name="submit" type="submit" class="btn btn-default">Enviar</button>
+      </form>
+        <?php 
+        }
+        ?>
+
+
         </div>
+        <a class="twitter-timeline" href="https://twitter.com/medquizzes" data-widget-id="734171797877338112">Tweets por el @medquizzes.</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
     </div>
+
+
+
+
 
     <?php 
 
     if(isset($_POST['quiz']) ){
-
       $title=$_POST['title'];
-      if(sizeof($_POST['title']==0))
+      if(strlen($title)==0)
       {
         $title=substr($_POST['quiz'], 0,15);
       }
@@ -161,11 +182,10 @@
       }
       $update="UPDATE quiz SET name='Q".$id."' WHERE id=$id";
       db_query($update);
-      $correct_A=('A'== $_POST['correcta']);
-      $insertA="INSERT INTO quiz_hashtag SET id_quiz=$id,value='Q".$id."A'";
-      $insertB="INSERT INTO quiz_hashtag SET id_quiz=$id,value='Q".$id."B'";
-      $insertC="INSERT INTO quiz_hashtag SET id_quiz=$id,value='Q".$id."C'";
-      $insertD="INSERT INTO quiz_hashtag SET id_quiz=$id,value='Q".$id."D'";
+      $insertA="INSERT INTO quiz_hashtag SET id_quiz=$id,value='#Q".$id."A ".$_POST['res_a']."'";
+      $insertB="INSERT INTO quiz_hashtag SET id_quiz=$id,value='#Q".$id."B ".$_POST['res_b']."'";
+      $insertC="INSERT INTO quiz_hashtag SET id_quiz=$id,value='#Q".$id."C ".$_POST['res_c']."'";
+      $insertD="INSERT INTO quiz_hashtag SET id_quiz=$id,value='#Q".$id."D ".$_POST['res_d']."'";
       db_query($insertA);
       db_query($insertB);
       db_query($insertC);

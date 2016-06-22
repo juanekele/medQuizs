@@ -90,7 +90,7 @@
                   <li class="divider"> </li>
                   <li><a href="./user/logout">Logout</a></li>
                   <?php           
-                  if (module_exists('hybridauth')) {
+                  if (module_exists('hybridauth') && !$logged_in) {
                       $element['#type'] = 'hybridauth_widget';
                       print drupal_render($element);
                   } 
@@ -108,8 +108,8 @@
        <?php print render($page['content']); ?>
           <div class="col-md-3">
           <div style="clear: both; margin-top: 10px;"></div>
-          <a class="twitter-timeline" data-dnt="true" href="https://twitter.com/Juanekele" data-widget-id="695657439375552512">Tweets por el @Juanekele.</a>
-  <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+          <a class="twitter-timeline" href="https://twitter.com/medquizzes" data-widget-id="734171797877338112">Tweets por el @medquizzes.</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
         </div>
       </div>
     </div>

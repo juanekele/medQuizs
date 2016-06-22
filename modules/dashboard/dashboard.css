@@ -132,3 +132,30 @@
   width: 30px;
   height: 1.6em;
 }
+
+
+button{
+  margin-left:50%; margin-top:5%; padding: 4px 8px 4px 6px; font: 700 1em Tahoma, Arial, Verdana, sans-serif;
+  color: #fff; background-color: #59B0E5;
+  border-radius: 31px 31px 31px 31px;
+
+border: 0px solid #000000;
+}
+
+
+.borderless table {
+    border-top-style: none;
+    border-left-style: none;
+    border-right-style: none;
+    border-bottom-style: none;
+}
+
+.goTwitter{
+  -webkit-border-radius: 50px; 
+  -moz-border-radius: 50px; 
+  border-radius: 50px; 
+  margin-left:50%; 
+  margin-top:5%; 
+  width:56px;
+  height:56px;
+}
