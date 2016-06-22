@@ -55,52 +55,27 @@ function answered()
                 if(!isset($datos[D])){$datos[D]=0;}
                 $porcentajeUser=$datos[$respuestaUser]*100/($datos[A]+$datos[B]+$datos[C]+$datos[D]);
                 $html.='<div class="panel panel-primary"> 
-          <div class="panel-heading">'.$key->name.'</div>
-              <div class="panel-body">
-                <table class="borderless">
-                <td style="width:40%"><img class="left-block" src="sandra/images/'.$key->name.'.jpg"></td>
-                <td style="width:20%">
-                  <button class="respuesta">
-                    <p>Tu respuesta fue: '.$respuestaUser.',</p> 
-                    <p>como el '.$porcentajeUser.'% de los usuarios</p>
-                  </button>
-                </td>
-                
-                <td><canvas id="'.$key->name.'" class="results"> 
-                  <script>rellenaGraf('.$datos[A].',"A",'.$datos[B].',"B",'.$datos[C].',"C",'.$datos[D].',"D","'.$key->name.'");</script> 
-                </canvas></td>
-                </table>
-                
-              </div>
-
-            </div>
-                     
-            <div style="clear: both; margin-top: 10px;"></div>';
-
-
-                /*$html.='<div class="panel panel-primary"> 
-            <div class="panel-heading">'.$key->name.'</div>
+              <div class="panel-heading">'.$key->name.': '.$key->title.'</div>
                 <div class="panel-body">
-                  <img onclick="javascript:this.width=750;this.height=500 ;" 
-    onclick="javascript:this.width=225;this.height= 150;" class="img" src="sandra/images/'.$key->name.'.jpg" style="width: 20%;
-    height: 30%;
-    position: fixed;">
-                  <div style="clear: both; margin-top: 20px;"></div>
-                  <div style="margin-left:48% "><button style="display: inline-block;
-  border-radius: 4px;
-  background-color: #337ab7;
-  border: none;
-  color: #FFFFFF;
-  font-size: 14px;
-  width: 32%;
-  margin: 5px;"><p>Tu respuesta fue: '.$respuestaUser.',</p> <p>como el '.$porcentajeUser.'% de los usuarios</p></div>
-                  <canvas id="'.$key->name.'" class="results" style="margin-top:-100px"> 
-                    <script>rellenaGraf('.$datos[A].',"#Q1A",'.$datos[B].',"#Q1B",'.$datos[C].',"#Q1C",'.$datos[D].',"#Q1D","'.$key->name.'");</script> 
-                  </canvas>
-                </div>
+                  <table class="borderless">
+                    <tr style="width=100%">
+                      <td style="float:left"><img class="left-block" src="sandra/images/'.$key->name.'.jpg"></td>
+                      <td style="width:20%">
+                          <button class="respuesta">
+                            <p>Tu respuesta fue: '.$respuestaUser.',</p> 
+                            <p>como el '.$porcentajeUser.'% de los usuarios</p>
+                          </button>
+                        </td>
+                      <td style="float:right">
+                        <canvas id="'.$key->name.'" class="results"> 
+                          <script>rellenaGraf('.$datos[A].',"A",'.$datos[B].',"B",'.$datos[C].',"C",'.$datos[D].',"D","'.$key->name.'");</script> 
+                        </canvas>
+                      </td>
+                    </tr>
+                  </table> 
               </div>
-                       
-              <div style="clear: both; margin-top: 10px;"></div>';*/
+            </div> 
+            <div style="clear: both; margin-top: 10px;"></div>';
               }
             }
             if(!$hay)

@@ -181,20 +181,14 @@ iframe#iframeModule {width: 816px;height: 616px;}
     float: right;
     overflow: hidden;
 }
-button{
-  margin-left:50%; margin-top:5%; padding: 4px 8px 4px 6px; font: 700 1em Tahoma, Arial, Verdana, sans-serif;
-  color: #fff; background-color: #59B0E5;
-  border-radius: 31px 31px 31px 31px;
-
-border: 0px solid #000000;
-}
 
 
-.borderless table {
+.borderless{
     border-top-style: none;
     border-left-style: none;
     border-right-style: none;
     border-bottom-style: none;
+    width:100%;
 }
 
 .goTwitter{
