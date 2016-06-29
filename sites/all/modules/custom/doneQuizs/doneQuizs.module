@@ -63,7 +63,7 @@ function answered()
                       <td style="width:20%">
                           <button class="respuesta">
                             <p>Tu respuesta fue: '.$respuestaUser.',</p> 
-                            <p>como el '.$porcentajeUser.'% de los usuarios</p>
+                            <p>como el '.number_format($porcentajeUser,1).'% de los usuarios</p>
                           </button>
                         </td>
                       <td style="float:right">
